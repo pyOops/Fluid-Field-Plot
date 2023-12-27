@@ -6,9 +6,10 @@ DEGREES_TO_RADIANS = 1
 
 def convert_angle(angle, mode):
     """
-    弧度转角度
-    :param angle:
-    :return:
+    角度单位换算
+    :param angle: 要换算单位的角度值
+    :param mode: 转换模式
+    :return: 转换后的角度值
     """
     if mode == RADIANS_TO_DEGREES:
         return angle * 180 / np.pi
