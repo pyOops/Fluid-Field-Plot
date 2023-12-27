@@ -35,6 +35,7 @@ def plot_flow(stream_func,
     if contour:
         plt.contour(x, y, stream_func(x, y))
     plt.axis('equal')
+    return plt.show()
 
 
 def vortex(x, y, gamma):
