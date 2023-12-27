@@ -9,13 +9,16 @@
 
 ## 示例
 #### 示例1
+
 ```python
-from library import *
+from fluid import *
+
 
 # 自定义一个流场的流函数
 def my_stream_funtion(x, y):
     # 叠加均匀流和涡流
-    return uniform(x, y, 10, np.pi/6) + vortex(x, y, 80)
+    return uniform(x, y, 10, np.pi / 6) + vortex(x, y, 80)
+
 
 if __name__ == '__main__':
     # 绘图，并绘制等值线
@@ -25,8 +28,9 @@ if __name__ == '__main__':
 ![img.png](plots/example-1.png)
 
 #### 示例2
+
 ```python
-from library import *
+from fluid import *
 import matplotlib.pyplot as plt
 
 
