@@ -9,6 +9,9 @@ def plot_flow(stream_func,
               yl=np.linspace(-5, 5, 31),
               contour=False,
               dpi=250,
+              normalized_color=False,
+              color_range=None,
+              color_map="rainbow",
               scale: float = None):
     """
     根据流函数绘制流场（速度场）
@@ -19,6 +22,9 @@ def plot_flow(stream_func,
     :param yl: 绘图的y范围
     :param contour: 是否绘制等值线
     :param dpi: 输出图像的DPI
+    :param normalized_color: 是否输出归一化彩色图像。开启此功能后，所有的箭头长度相等，使用不同渐变颜色表示大小。
+    :param color_range: 颜色范围，仅当normalized_color=True时有效
+    :param color_map: 颜色配色方案，仅当normalized_color=True时有效
     :param scale: 箭头缩放比例，值越大，箭头越短
     :return: 无返回值，但是会输出图像
     """
@@ -31,7 +37,23 @@ def plot_flow(stream_func,
     v = (stream_func(x - h, y) - stream_func(x + h, y)) / (2 * h)  # v = -d\psi/dx
 
     plt.figure(figsize=(7, 7), dpi=dpi)
-    plt.quiver(x, y, u, v, scale=scale)
+
+    magnitude = np.sqrt(u ** 2 + v ** 2)
+    if normalized_color:
+        if color_range is not None:
+            norm = plt.Normalize(*color_range)
+        else:
+            norm = plt.Normalize(magnitude.min(), magnitude.max())
+        u_normalized = u / magnitude
+        v_normalized = v / magnitude
+        quiver = plt.quiver(x, y, u_normalized, v_normalized, magnitude,
+                            norm=norm, cmap=color_map, scale=scale)
+        plt.colorbar(quiver, label='Magnitude (speed)')
+
+
+    else:
+        plt.quiver(x, y, u, v, scale=scale)
+
     if contour:
         plt.contour(x, y, stream_func(x, y))
     plt.axis('equal')
