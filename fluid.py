@@ -82,3 +82,12 @@ def uniform(x, y, velocity, theta=0):
     :return: 均匀流流函数
     """
     return velocity * (-x * np.sin(theta) + y * np.cos(theta))
+
+
+def flow_over_cylinder(x, y, velocity, R, gamma):
+    r = np.sqrt(x**2+y**2)
+    theta = np.arctan2(y, x)
+    return (
+            velocity*y*(1-R**2/r**2) +
+            (gamma / 2*np.pi) * np.log(r/R)
+    )
